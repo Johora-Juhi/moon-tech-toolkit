@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 import { toggle, toggleBrand } from "../features/filter/filterSlice";
+import { getProducts } from "../features/products/productSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(state=> state.filter)
-  const {stock, brands} = filter;
-  const [products, setProducts] = useState([]);
+  const filter = useSelector((state) => state.filter);
+  const product = useSelector((state) => state.products);
+  const { isLoading, products } = product;
+  const { stock, brands } = filter;
+  // const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data));
-  }, []);
+    dispatch(getProducts());
+  }, [dispatch]);
 
   console.log(products);
 
   const activeClass = "text-white  bg-indigo-500 border-white";
 
   let content;
+
+  if(isLoading){
+    content = <h1>Loading.....</h1>
+  }
 
   if (products.length) {
     content = products.map((product) => (
@@ -60,7 +65,8 @@ const Home = () => {
           onClick={() => dispatch(toggleBrand("amd"))}
           className={`border px-3 py-2 rounded-full font-semibold ${
             brands.includes("amd") ? activeClass : null
-          }`}        >
+          }`}
+        >
           AMD
         </button>
         <button
