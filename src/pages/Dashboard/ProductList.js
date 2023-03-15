@@ -19,9 +19,13 @@ const ProductList = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    //   if (isLoading) {
+    //   toast.loading("deleting.....");
+    // }
+
     if (!isLoading && deleteSuccess) {
-      toast.success("Product added", { id: "deleteProduct" });
-      dispatch(toggleDeleteSuccess());
+      toast.success("Successfully deleted");
+      // dispatch(toggleDeleteSuccess());
     }
 
     // if (!isLoading && isError) {
@@ -29,9 +33,6 @@ const ProductList = () => {
     // }
   }, [isError, isLoading, deleteSuccess, error]);
 
-  if (isLoading) {
-    toast.loading("deleting.....", { id: "deleteProduct" });
-  }
 
   return (
     <div class="flex flex-col justify-center items-center h-full w-full ">

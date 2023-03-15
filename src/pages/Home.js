@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
+import { useGetProductsQuery } from "../features/api/apiSlice";
 import { toggle, toggleBrand } from "../features/filter/filterSlice";
 import { getProducts } from "../features/products/productSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.filter);
-  const product = useSelector((state) => state.products);
-  const { isLoading, products } = product;
+  // const product = useSelector((state) => state.products);
+  // const { isLoading, products } = product;
   const { stock, brands } = filter;
-  // const [products, setProducts] = useState([]);
+  // // const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, [dispatch]);
+
+  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery();
+  console.log(data);
+
+  const products = data?.data;
 
   console.log(products);
 
@@ -22,8 +28,8 @@ const Home = () => {
 
   let content;
 
-  if(isLoading){
-    content = <h1>Loading.....</h1>
+  if (isLoading) {
+    content = <h1>Loading.....</h1>;
   }
 
   if (products.length) {
