@@ -10,7 +10,7 @@ const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     cart: cartSlice,
     filter: filterSlice,
-    // products: productSlice
+    products: productSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productApi.middleware)
 });
