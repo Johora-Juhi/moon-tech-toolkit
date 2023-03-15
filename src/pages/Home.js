@@ -17,7 +17,10 @@ const Home = () => {
   //   dispatch(getProducts());
   // }, [dispatch]);
 
-  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery();
+  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery(
+    null,
+    { refetchOnMountOrArgChange: true }
+  );
   console.log(data);
 
   const products = data?.data;

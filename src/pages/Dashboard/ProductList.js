@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useRemoveProductMutation } from "../../features/api/apiSlice";
 import {
   getProducts,
-  removeProduct,
   toggleDeleteSuccess,
 } from "../../features/products/productSlice";
 
 const ProductList = () => {
   const dispatch = useDispatch();
+  const [removeProduct] = useRemoveProductMutation();
 
   const product = useSelector((state) => state.products);
   const { isLoading, deleteSuccess, isError, error, products } = product;
@@ -32,7 +33,6 @@ const ProductList = () => {
     //   toast.error(error, { id: "deleteProduct" });
     // }
   }, [isError, isLoading, deleteSuccess, error]);
-
 
   return (
     <div class="flex flex-col justify-center items-center h-full w-full ">
@@ -92,7 +92,7 @@ const ProductList = () => {
                   </td>
                   <td class="p-2">
                     <div class="flex justify-center">
-                      <button onClick={() => dispatch(removeProduct(_id))}>
+                      <button onClick={() => removeProduct(_id)}>
                         <svg
                           class="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1"
                           fill="none"
